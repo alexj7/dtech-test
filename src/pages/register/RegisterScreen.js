@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import clipSvgSource from '../../assets/clip.svg';
 import { useRegister } from "../../hooks/useRegister";
 
+
 export const RegisterScreen = () => {
     const inputFile = React.createRef();
 
@@ -17,6 +18,7 @@ export const RegisterScreen = () => {
         name, setName,
         lastName, setLastName,
         username, setUsername,
+        error,
         avatar, handleAvatar,
         handleRegister,
     } = useRegister();
@@ -30,7 +32,7 @@ export const RegisterScreen = () => {
             </Heading>
 
             <div className="sm:w-96 w-full bg-white border-dotted border-2 border-purple-400 px-3 flex flex-col mt-10 py-10 px-12">
-                <input className="hidden" ref={inputFile} type="file" name="myImage" onChange={handleAvatar} />
+                <input className="hidden" accept="image/png, image/gif, image/jpeg" ref={inputFile} type="file" name="myImage" onChange={handleAvatar} />
                 <Upload
                     className={"h-20 w-20 rounded-full border-2 bg-white hover:bg-slate-100 mx-auto mb-3 cursor-pointer flex items-center justify-center"}
                     hasIcon={true}
@@ -64,17 +66,21 @@ export const RegisterScreen = () => {
                     onChange={setUsername}
                     placeholder={"Nombre de usuario"} />
 
+                <span className="text-red-400 text-xs text-center"> {error} </span>
+
                 <Button
                     className={"w-full h-10 rounded-lg ml-auto bg-purple-500 hover:bg-purple-600 text-white px-4 py-1 mt-2"}
                     onClick={handleRegister}
                     disabled={
                         name.length === 0 ||
                         lastName.length === 0 ||
-                        username.length === 0 ||
-                        avatar.length === 0}
+                        username.length === 0
+                    }
                 >
                     Registrarse
                 </Button>
+
+
 
                 <Label className={"text-center mt-4 text-xs text-zinc-500"}>
                     ¿Ya tienes cuenta?

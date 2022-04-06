@@ -26,7 +26,7 @@ export const LoginScreen = () => {
 
         <Button
           className={"w-4/12 rounded-lg ml-auto h-10 bg-purple-500 hover:bg-purple-600 text-white px-4 py-1"}
-          disabled={username == ''}
+          disabled={username === ''}
           onClick={handleLogin}>
           Entrar
         </Button>
