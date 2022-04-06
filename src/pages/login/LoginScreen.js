@@ -3,9 +3,11 @@ import { Button } from "../../components/atoms/Button/Button";
 import { Heading } from "../../components/atoms/Heading/Heading";
 import { Input } from "../../components/atoms/Input/Input";
 import { Label } from "../../components/atoms/Label/Label";
+import { useLogin } from "../../hooks/useLogin";
 import { useNavigate } from 'react-router-dom';
 
 export const LoginScreen = () => {
+  const { username, setUsername, handleLogin } = useLogin();
   const navigate = useNavigate();
 
   return (
@@ -16,13 +18,16 @@ export const LoginScreen = () => {
 
       <div className="sm:w-96 w-full bg-white border-dotted  border-2 border-purple-400 px-3 flex flex-wrap mt-10 py-10 px-12">
         <Input
-          className={"w-7/12 pl-3 mb-3 h-10 rounded border border-purple-400 bg-slate-100 outline-none focus:ring-0 caret-purple-400 text-zinc-600 py-1"}
+          className={"w-7/12"}
           type="text"
+          value={username}
+          onChange={setUsername}
           placeholder={"@username"} />
 
         <Button
           className={"w-4/12 rounded-lg ml-auto h-10 bg-purple-500 hover:bg-purple-600 text-white px-4 py-1"}
-        >
+          disabled={username === ''}
+          onClick={handleLogin}>
           Entrar
         </Button>
 

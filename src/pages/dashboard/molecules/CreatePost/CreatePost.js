@@ -1,21 +1,77 @@
 import React from 'react'
+import { useNewPost } from '../../../../hooks/useNewPost'
+import Picker from 'emoji-picker-react';
+import { Input } from '../../../../components/atoms/Input/Input';
 
 export const CreatePost = () => {
+    const inputFile = React.createRef();
+
+    const {
+        openEmoji, setOpenEmoji,
+        message, setMessage,
+        location, setLocation,
+        image, setImage, handleImage,
+        handleNewPost,
+        cleanState,
+        error,
+    } = useNewPost();
+
+    const onEmojiClick = (event, emojiObject) => {
+        setMessage(message + emojiObject.emoji)
+    };
+
     return (
-        <div className="border-2 bg-white rounded flex flex-col mb-3">
+        <div className="border-2 bg-white rounded flex flex-col mb-3 relative z-40">
             <div className="h-32">
                 <textarea
+                    value={message}
+                    onChange={e => setMessage(e.target.value)}
                     className="w-full h-full border-2 border-white p-2 resize-none bg-slate-100 outline-none focus:ring-0 caret-purple-400 "
                     name="" id="" placeholder="Escribe una publicacion..."></textarea>
             </div>
-            <div className="h-full border-y-1 align-center justify-center p-8">
-                <img className="w-full mx-auto"
-                    src="data:image/jpeg;base64,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"
-                    alt="" />
-            </div>
-            <div className="px-2 border-t-2 py-2 flex">
 
-                <div className="mx-1 hover:bg-slate-100 rounded-full h-7 w-7 flex items-center justify-center cursor-pointer">
+            {error ?
+                <span className="text-red-400 text-xs text-center py-2"> {error} </span>
+                :
+                null
+            }
+
+
+            {
+                image !== '' ?
+                    < div className="h-full border-y-1 align-center justify-center p-8 relative">
+
+                        <div onClick={() => setImage('')} className="right-8 absolute mx-1 hover:bg-slate-100 rounded-full h-7 w-7 flex items-center justify-center cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </div>
+
+                        <img className="w-auto mx-auto max-h-80"
+                            src={image}
+                            alt="" />
+                    </div>
+                    :
+                    null
+            }
+
+            {
+                openEmoji ?
+                    <Picker pickerStyle={{ position: 'absolute', 'z-index': 10, bottom: '-325px', left: '5px' }} onEmojiClick={onEmojiClick} />
+                    :
+                    null
+            }
+
+            <div className="px-2 border-t-2 py-2 flex items-center">
+
+                <div onClick={() => cleanState()} className="mx-1 hover:bg-slate-100 rounded-full p-1 rounded-full flex items-center justify-center cursor-pointer" >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+
+                </div>
+
+                <div onClick={() => setOpenEmoji(!openEmoji)} className="mx-1 hover:bg-slate-100 rounded-full p-1 rounded-full flex items-center justify-center cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round"
@@ -23,19 +79,32 @@ export const CreatePost = () => {
                     </svg>
                 </div>
 
-                <div className="mx-1 hover:bg-slate-100 rounded-full h-7 w-7 flex items-center justify-center cursor-pointer">
+                <div className="mx-1 hover:bg-slate-100 rounded-full p-1 rounded-full flex items-center justify-center cursor-pointer"
+                    onClick={() => inputFile.current.click()}>
+
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round"
                             d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                     </svg>
+                    <input className="hidden" accept="image/png, image/gif, image/jpeg" ref={inputFile} type="file" name="myImage" onChange={handleImage} />
+
                 </div>
 
-                <button className="rounded-lg ml-auto bg-purple-500 hover:bg-purple-600 text-white px-4 mr-2">
+
+
+                <Input
+                    className="h-8 mb-0 w-full ml-2 border-none"
+                    type="text"
+                    value={location}
+                    onChange={setLocation}
+                    placeholder={"Locacion"} />
+
+                <button onClick={handleNewPost} className="rounded-lg ml-4 bg-purple-500 hover:bg-purple-600 text-white px-4 h-9 mr-2">
                     Publicar
                 </button>
             </div>
 
-        </div>
+        </div >
     )
 }

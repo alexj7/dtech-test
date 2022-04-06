@@ -8,8 +8,21 @@ import { Image } from '../../components/atoms/Image/Image';
 import { useNavigate } from 'react-router-dom';
 
 import clipSvgSource from '../../assets/clip.svg';
+import { useRegister } from "../../hooks/useRegister";
+
 
 export const RegisterScreen = () => {
+    const inputFile = React.createRef();
+
+    const {
+        name, setName,
+        lastName, setLastName,
+        username, setUsername,
+        error,
+        avatar, handleAvatar,
+        handleRegister,
+    } = useRegister();
+
     const navigate = useNavigate();
 
     return (
@@ -19,31 +32,55 @@ export const RegisterScreen = () => {
             </Heading>
 
             <div className="sm:w-96 w-full bg-white border-dotted border-2 border-purple-400 px-3 flex flex-col mt-10 py-10 px-12">
+                <input className="hidden" accept="image/png, image/gif, image/jpeg" ref={inputFile} type="file" name="myImage" onChange={handleAvatar} />
                 <Upload
                     className={"h-20 w-20 rounded-full border-2 bg-white hover:bg-slate-100 mx-auto mb-3 cursor-pointer flex items-center justify-center"}
                     hasIcon={true}
-                    onClick={() => { }}>
-                    <Image className={"h-6 w-6 text-zinc-400"} source={clipSvgSource} alt={"Agrega tu avatar"} />
+                    onClick={() => inputFile.current.click()}>
+
+                    {
+                        avatar == '' ?
+                            < Image className={"h-6 w-6 text-zinc-400"} source={clipSvgSource} alt={"Agrega tu avatar"} />
+                            :
+                            <Image className={"h-full w-full rounded-full"} source={avatar} alt={"Agrega tu- avatar"} />
+                    }
+
                 </Upload>
 
+
                 <Input
-                    className={"pl-3 mb-3 h-10 rounded border border-purple-400 bg-slate-100 outline-none focus:ring-0 caret-purple-400 text-zinc-600 py-1"}
                     type={"text"}
+                    value={name}
+                    onChange={setName}
                     placeholder={"Nombre"} />
 
                 <Input
-                    className={"pl-3 mb-3 h-10 rounded border border-purple-400 bg-slate-100 outline-none focus:ring-0 caret-purple-400 text-zinc-600 py-1"}
                     type={"text"}
+                    value={lastName}
+                    onChange={setLastName}
                     placeholder={"Apellido"} />
 
                 <Input
-                    className={"pl-3 mb-3 h-10 rounded border border-purple-400 bg-slate-100 outline-none focus:ring-0 caret-purple-400 text-zinc-600 py-1"}
                     type={"text"}
+                    value={username}
+                    onChange={setUsername}
                     placeholder={"Nombre de usuario"} />
 
-                <Button className={"w-full h-10 rounded-lg ml-auto bg-purple-500 hover:bg-purple-600 text-white px-4 py-1 mt-2"} >
+                <span className="text-red-400 text-xs text-center"> {error} </span>
+
+                <Button
+                    className={"w-full h-10 rounded-lg ml-auto bg-purple-500 hover:bg-purple-600 text-white px-4 py-1 mt-2"}
+                    onClick={handleRegister}
+                    disabled={
+                        name.length === 0 ||
+                        lastName.length === 0 ||
+                        username.length === 0
+                    }
+                >
                     Registrarse
                 </Button>
+
+
 
                 <Label className={"text-center mt-4 text-xs text-zinc-500"}>
                     ¿Ya tienes cuenta?
@@ -54,6 +91,7 @@ export const RegisterScreen = () => {
                         Inicia aqui
                     </Label>
                 </Label>
+
             </div>
         </div >
     );
