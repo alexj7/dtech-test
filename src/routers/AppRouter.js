@@ -6,7 +6,7 @@ import { LoginScreen } from "../pages/login/LoginScreen";
 import { RegisterScreen } from "../pages/register/RegisterScreen";
 
 export const AppRouter = () => {
-    const logged = true
+    const logged = false
 
     return (
         <Router>
