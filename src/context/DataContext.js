@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext } from "react";
 import { usersData } from '../data/usersData'
 import { postsData } from '../data/postsData'
 import { useLocalStorage } from "react-use-storage";
@@ -14,10 +14,11 @@ export const DataProvider = ({ children }) => {
         logged: false
     })
 
+
     return (
         <DataContext.Provider
             value={{
-                state, setState, removeState
+                state, setState, removeState,
             }}
         >
             {children}

@@ -1,10 +1,12 @@
 import React, { useContext } from 'react'
 import { DataContext } from '../../../context/DataContext'
+import { useFilteredPosts } from '../../../hooks/useFilteredPosts'
 import { Input } from '../../atoms/Input/Input'
 
 export const NavBar = () => {
 
   const { state, setState } = useContext(DataContext)
+  const { search, setSearch } = useFilteredPosts()
 
   const logOut = () => {
     setState({ ...state, user: {}, logged: false, })
@@ -28,8 +30,10 @@ export const NavBar = () => {
           </svg>
 
           <Input
-            className="sm:h-full pl-8 rounded border-2 sm:w-48 w-32 border-purple-400 bg-slate-100 outline-none focus:ring-0 caret-purple-400 text-zinc-600 py-1 pr-2"
+            className="sm:h-full pl-8 mb-1 rounded border-2 sm:w-48 w-32 border-purple-400 bg-slate-100 outline-none focus:ring-0 caret-purple-400 text-zinc-600 py-1 pr-2"
             type="text"
+            value={search}
+            onChange={setSearch}
             placeholder="Buscar" />
 
         </div>

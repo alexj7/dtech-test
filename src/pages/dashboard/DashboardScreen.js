@@ -1,12 +1,12 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Profile } from '../../components/molecules/Profile/Profile'
-import { DataContext } from '../../context/DataContext'
+import { useFilteredPosts } from '../../hooks/useFilteredPosts'
 import { CreatePost } from './molecules/CreatePost/CreatePost'
 import { Post } from './molecules/Post/Post'
 
 export const DashboardScreen = () => {
 
-    const { state: { posts } } = useContext(DataContext)
+    const { fillposts } = useFilteredPosts()
 
     return (
 
@@ -25,13 +25,11 @@ export const DashboardScreen = () => {
                     {/* create post */}
 
                     {
-                        posts.map((post, index) => (
+                        fillposts.map((post, index) => (
                             <Post index={index} key={index} data={post} />
                         ))
                     }
 
-
-                    {/* post twitter  */}
                 </div>
                 {/* feed  */}
 

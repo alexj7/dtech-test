@@ -29,12 +29,7 @@ export const useRegister = () => {
     }
 
     if (!alphaNumericMax20.test(username)) {
-      setError('El Nombre de usuario debe tener entre 3 a 20 caracteres')
-      return
-    }
-
-    if (!alphaNumericMax20.test(username)) {
-      setError('El Nombre de usuario debe tener entre 3 a 20 caracteres')
+      setError('El Nombre de usuario debe tener entre 3 a 20 caracteres alfanumericos')
       return
     }
 
