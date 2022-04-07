@@ -1,13 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { DataContext } from "../context/DataContext";
 import { Max500, alphaNumericMax30 } from "../utils/regex";
 
 export const useNewPost = () => {
+
+    // LOCALS
     const [openEmoji, setOpenEmoji] = useState(false);
     const [message, setMessage] = useState("");
     const [location, setLocation] = useState("");
     const [image, setImage] = useState("");
     const [error, setError] = useState("");
 
+    // CONTEXT
+    const { state, setState } = useContext(DataContext)
+
+
+
+    // METHODS
     const handleImage = (event) => {
         const file = event.target.files[0];
         const reader = new FileReader();
@@ -39,6 +48,20 @@ export const useNewPost = () => {
         }
 
         // submit
+        const post = {
+            message,
+            location,
+            image,
+            like: [],
+            status: 'published',
+            author: state.user,
+            created_at: new Date()
+        }
+
+        setState({ ...state, posts: [post, ...state.posts] })
+
+        cleanState()
+
 
     }
 

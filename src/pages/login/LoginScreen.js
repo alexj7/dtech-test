@@ -7,7 +7,7 @@ import { useLogin } from "../../hooks/useLogin";
 import { useNavigate } from 'react-router-dom';
 
 export const LoginScreen = () => {
-  const { username, setUsername, handleLogin } = useLogin();
+  const { username, error, setUsername, handleLogin } = useLogin();
   const navigate = useNavigate();
 
   return (
@@ -30,6 +30,8 @@ export const LoginScreen = () => {
           onClick={handleLogin}>
           Entrar
         </Button>
+
+        <span className="text-red-400 text-xs text-center"> {error} </span>
 
         <Label className={"mx-auto mt-5 text-xs text-zinc-500"}>
           ¿No tienes cuenta?

@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { NavBar } from "../components/organism/NavBar/NavBar";
+import { DataContext } from "../context/DataContext";
 import { DashboardScreen } from "../pages/dashboard/DashboardScreen";
 import { LoginScreen } from "../pages/login/LoginScreen";
 import { RegisterScreen } from "../pages/register/RegisterScreen";
 
 export const AppRouter = () => {
-    const logged = true
+
+    const { state: { logged } } = useContext(DataContext)
 
     return (
         <Router>
