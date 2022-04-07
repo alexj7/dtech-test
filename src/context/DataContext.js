@@ -1,12 +1,13 @@
 import React, { createContext, useState } from "react";
 import { usersData } from '../data/usersData'
 import { postsData } from '../data/postsData'
+import { useLocalStorage } from "react-use-storage";
 
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
 
-    const [state, setState] = useState({
+    const [state, setState, removeState] = useLocalStorage('ContextData', {
         user: {},
         users: usersData,
         posts: postsData,
@@ -16,7 +17,7 @@ export const DataProvider = ({ children }) => {
     return (
         <DataContext.Provider
             value={{
-                state, setState,
+                state, setState, removeState
             }}
         >
             {children}
